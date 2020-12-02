@@ -12,23 +12,19 @@ def findPairsOfNumbers(array, sum):
     # Go through the YEAR array and sum up
     for i in range(0, sum):
         if exists(i, array):
+            array[i] = -1
             j = sum - i
             if exists(j, array):
                 yield(i, j)
                 # mark j as done
                 array[j] = -1
 
-def findTripleOfNumbers(array):
-    length = len(array)
-    sum = length - 1
+""" def findTripleOfNumbers(array, sum):
     # Go through the YEAR array and sum up
     for i in range(0, sum):
         if exists(i, array):
-            j = sum - i
-            if exists(j, array):
-                yield(i, j)
-                # mark j as done
-                array[j] = -1
+            sub_sum = sum - i
+            findPairsOfNumbers(array, sub_sum) """
 
 def main():
     # Fill in the YEAR array with input values
