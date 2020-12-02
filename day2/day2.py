@@ -10,6 +10,19 @@ class Policy1():
                 count = count + 1
         return password.min <= count and password.max >= count
 
+class Policy2():
+    def __init__(self):
+        pass
+    
+    def apply(self, password):
+        position1 = password.min - 1
+        position2 = password.max - 1
+        if position1 < len(password.password) and position2 < len(password.password):
+            return (password.password[position1] == password.letter) ^ (password.password[position2] == password.letter)
+        else:
+            raise ValueError("Something wrong")
+        
+
 class Database():
     def __init__(self, lines):
         self.passwords = []
@@ -72,6 +85,8 @@ def main():
         lines = f.readlines()
         database = Database(lines)        
         count = database.countValidatePasswords(Policy1())
+        print(count)
+        count = database.countValidatePasswords(Policy2())
         print(count)
 
 if __name__ == "__main__":
