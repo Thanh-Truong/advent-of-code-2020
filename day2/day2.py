@@ -1,4 +1,28 @@
 
+class Policy1():
+    def __init__(self):
+        pass
+    
+    def apply(self, password):
+        count = 0
+        for c in password.password:
+            if c == password.letter:
+                count = count + 1
+        return password.min <= count and password.max >= count
+
+class Database():
+    def __init__(self, lines):
+        self.passwords = []
+        for line in lines:
+            self.passwords.append(Password(line))
+
+    def countValidatePasswords(self, policy):
+        count = 0
+        for password in self.passwords:
+            if policy.apply(password):
+                count = count + 1
+        return count
+
 class Password():
     def __init__(self, line):
         self.min = None
@@ -32,8 +56,12 @@ class Password():
     def toStr(self):
         print("min={} max={} letter={} password={}".format(self.min, self.max, self.letter, self.password))
 
-    def isValidate(self):
-        return self.password
+    def isValidate_1(self):
+        count = 0
+        for c in self.password:
+            if c == self.letter:
+                count = count + 1
+        return self.min <= count and self.max >= count
 
 def parseAnInputString(str):
     #"1-3 a: abcde"
@@ -42,12 +70,8 @@ def parseAnInputString(str):
 def main():
     with open('input.txt', 'r') as f:
         lines = f.readlines()
-        count = 0
-        for line in lines:
-            password = Password(line)
-            password.toStr()
-            if password.isValidate():
-                count = count + 1
+        database = Database(lines)        
+        count = database.countValidatePasswords(Policy1())
         print(count)
 
 if __name__ == "__main__":
