@@ -17,7 +17,7 @@ def findPairsOfNumbers(array, sum):
             if exists(j, array):
                 yield(i, j)
                 array[j] = - 1
-        #array[i] = -1
+        array[i] = -1
         
 
 def findTripleOfNumbers(array, sum):
@@ -26,7 +26,7 @@ def findTripleOfNumbers(array, sum):
         if exists(i, array):
             sub_sum = sum - i
             for j, k in findPairsOfNumbers(array[0: sub_sum], sub_sum):
-                #print("found {} {} {} {}".format(i, j, k, sub_sum))
+                print("found {} {} {} {}".format(i, j, k, sub_sum))
                 yield(i, j, k)
 
 def main():
