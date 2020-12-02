@@ -10,20 +10,23 @@ def exists(i, array):
 
 def findPairsOfNumbers(array, sum):
     # Go through the YEAR array and sum up
-    for i in range(0, len(array)):
+    length = len(array)
+    for i in range(0, length):
         if exists(i, array):
             j = sum - i
             if exists(j, array):
                 yield(i, j)
+                array[j] = - 1
+        #array[i] = -1
+        
 
 def findTripleOfNumbers(array, sum):
     # Go through the YEAR array and sum up
     for i in range(0, len(array)):
         if exists(i, array):
             sub_sum = sum - i
-            #print("Number {} . Now finding two number which sum up to {}".format(i, sub_sum))
-            for j, k in findPairsOfNumbers(array, sub_sum):
-                print("found {} {} {} {}".format(i, j, k, sub_sum))
+            for j, k in findPairsOfNumbers(array[0: sub_sum], sub_sum):
+                #print("found {} {} {} {}".format(i, j, k, sub_sum))
                 yield(i, j, k)
 
 def main():
@@ -38,7 +41,7 @@ def main():
 
     array = copy.copy(YEAR)
     # Go through the YEAR array and sum up
-    for i, j in findPairsOfNumbers(array, CURRENT_YEAR):
+    for i, j in findPairsOfNumbers(array[0: CURRENT_YEAR], CURRENT_YEAR):
         print(i*j)
     
     array = copy.copy(YEAR)
