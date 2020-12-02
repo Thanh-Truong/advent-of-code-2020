@@ -88,6 +88,35 @@ def main():
         print(count)
         count = database.countValidatePasswords(Policy2())
         print(count)
+    
+def quicker():
+    with open('input.txt', 'r') as f:
+        lines = f.readlines()
+        countPolicy1 = 0
+        countPolicy2 = 0
+        for line in lines:
+            # 8-10 h: mbhzhhhhhkhhhhhhh
+            min = line.split("-")[0]
+            tokens = line[len(min)+1:].split(" ")
+            max = tokens[0]
+            letter = tokens[1][0]
+            password = tokens[2]
+            #print("{} {} {} {}".format(min, max, letter, password))
+            # Policy 1
+            countLetter = 0
+            for c in password:
+                if c == letter:
+                    countLetter = countLetter + 1
+            if countLetter >= int(min) and countLetter <= int(max):
+                countPolicy1 = countPolicy1 + 1
+
+            # Policy 2
+            if (password[int(min) - 1] == letter) ^ (password[int(max) - 1] == letter):
+                countPolicy2 = countPolicy2 + 1
+        print(countPolicy1)
+        print(countPolicy2)
+
 
 if __name__ == "__main__":
     main()
+    quicker()

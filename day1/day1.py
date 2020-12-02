@@ -48,7 +48,7 @@ def main():
     for i, j, k in findTripleOfNumbers(array, CURRENT_YEAR):
        print(i*j*k)
 
-def main1():
+def quicker():
     # Fill in the YEAR array with input values
     listNumbers = []
     with open('input.txt', 'r') as f:
@@ -74,4 +74,5 @@ def main1():
     
 
 if __name__ == "__main__":
-    main1()
+    main()
+    quicker()
