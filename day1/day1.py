@@ -4,11 +4,21 @@ import copy
 
 CURRENT_YEAR = datetime.date.today().year
 YEAR = [-1] * (CURRENT_YEAR + 1)
-
+    
 def exists(i, array):
     return array[i] == i
 
-def findPairsOfNumbers(array):
+def findPairsOfNumbers(array, sum):
+    # Go through the YEAR array and sum up
+    for i in range(0, sum):
+        if exists(i, array):
+            j = sum - i
+            if exists(j, array):
+                yield(i, j)
+                # mark j as done
+                array[j] = -1
+
+def findTripleOfNumbers(array):
     length = len(array)
     sum = length - 1
     # Go through the YEAR array and sum up
@@ -32,7 +42,7 @@ def main():
 
     array = copy.copy(YEAR)
     # Go through the YEAR array and sum up
-    for i, j in findPairsOfNumbers(array):
+    for i, j in findPairsOfNumbers(array, CURRENT_YEAR):
         print(i*j)
 
 if __name__ == "__main__":
