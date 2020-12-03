@@ -1,12 +1,3 @@
-def foo():
-    with open('input.txt', 'r') as f:
-        lines = f.read().splitlines()
-        array = []
-        for line in lines:
-            print("{} {} ".format(line, len(line)))
-            array.append(line)
-
-
 def makeArray():
     with open('input.txt', 'r') as f:
         lines = f.read().splitlines()
