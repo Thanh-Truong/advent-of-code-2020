@@ -33,7 +33,9 @@ def countTreesWithSlope(array, right, down):
 
 def main():
     array = makeArray()
+    # Part 1
     print(countTreesWithSlope(array, right=3, down=1))
+    # Part 2
     result = countTreesWithSlope(array, right=1, down=1) * countTreesWithSlope(array, right=3, down=1) * countTreesWithSlope(
         array, right=5, down=1) * countTreesWithSlope(array, right=7, down=1) * countTreesWithSlope(array, right=1, down=2)
     print(result)
