@@ -17,13 +17,15 @@ def makeArray():
 def countTreesWithSlope(array, right, down):
     countTrees = 0
     col = 0
-    for row in range(len(array)):
+    row = 0
+    while row < len(array):
         col = row * right
         checkPoint = col % len(array[row])
         if row != 0: # start position
             if array[row][checkPoint] == '#':
                 countTrees = countTrees + 1
         #print("row = {} col = {} checkPoint = {} value = {} trees = {}".format(row, col, checkPoint, array[row][checkPoint], countTrees))
+        row = row + down
     return countTrees
 
 def main():
