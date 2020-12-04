@@ -27,17 +27,10 @@ def isHgtValid(hgt):
     # hgt (Height) - a number followed by either cm or in:
     #   If cm, the number must be at least 150 and at most 193.
     #   If in, the number must be at least 59 and at most 76.
-    try:
-        unit = hgt[len(hgt) -2 : len(hgt)]
-        num = int(hgt[:len(hgt) - 2])
-        if unit == "cm":
-            return int(num) >= 150 and int(num) <= 193
-        elif unit == "in":
-            return int(num) >= 59 and int(num) <= 76
-        else:
-            return False
-    except Exception:
-        return False
+    unit = hgt[len(hgt) -2 : len(hgt)]
+    num = int(hgt[:len(hgt) - 2])
+    return (unit == "cm" and 150 <= int(num) <= 193) or (
+        unit == "in" and 59 <= int(num) <= 76)
 
 def allRequiredFieldsPresent(passport):
     required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
