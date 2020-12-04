@@ -91,9 +91,3 @@ if __name__ == "__main__":
     passports = map(lambda info: makePassportFromStr(info), listInformationFromFile())
     numValidPassports = len(list(filter(lambda p: isValidPartTwo(p), passports)))
     print(numValidPassports)
-
-    #print(isHgtValid("177cm"))
-    dic = {'a' : 1, 'b' : 2}
-    a = map(lambda k: dic[k], dic.keys())
-    for v in map(lambda k: dic[k], dic.keys()):
-        print(v)
