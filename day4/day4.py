@@ -4,30 +4,25 @@ from functools import reduce
 def isValidPartTwo(passport):
     rules = {'byr': isByrValid, 'iyr': isIyrValid, 'eyr': isEyrValid,
              'hgt': isHgtValid, 'hcl': isHclValid, 'ecl': isEclValid, 'pid': isPidValid}
-    # apply rules
-    res = map((lambda field: rules[field](passport.get(field))), rules)
-    return reduce(lambda x, y: x and y, res)
+    try:
+        # apply rules
+        res = map((lambda field: rules[field](passport.get(field))), rules)
+        return reduce(lambda x, y: x and y, res)
+    except Exception:
+        return False
+    
  
 def isByrValid(byr):
     # byr (Birth Year) - four digits; at least 1920 and at most 2002.
-    try:
-        return int(byr) >= 1920 and int(byr) <= 2002
-    except Exception:
-        return False
+    return 1920 <= int(byr) <= 2002
 
 def isIyrValid(iyr):
     # iyr (Issue Year) - four digits; at least 2010 and at most 2020.
-    try:
-        return int(iyr) >= 2010 and int(iyr) <= 2020
-    except Exception:
-        return False
+    return 2010 <= int(iyr) <= 2020
 
 def isEyrValid(eyr):
     # eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
-    try:
-        return int(eyr) >= 2020 and int(eyr) <= 2030
-    except Exception:
-        return False
+    return 2020 <= int(eyr) <= 2030
 
 def isHgtValid(hgt):
     # hgt (Height) - a number followed by either cm or in:
@@ -47,7 +42,6 @@ def isHgtValid(hgt):
 
 def isHclValid(hcl):
     # hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
-    
     return hcl and re.search("^#[0-9a-f]{6}$", hcl)
 
 def isEclValid(ecl):
