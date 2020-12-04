@@ -1,19 +1,10 @@
 
-class Policy1():
-    def __init__(self):
-        pass
-    
+class Policy1():    
     def apply(self, password):
-        count = 0
-        for c in password.password:
-            if c == password.letter:
-                count = count + 1
+        count = sum(map(lambda c : 1 if password.letter in c else 0, password.password))
         return password.min <= count and password.max >= count
 
 class Policy2():
-    def __init__(self):
-        pass
-    
     def apply(self, password):
         position1 = password.min - 1
         position2 = password.max - 1
@@ -21,7 +12,6 @@ class Policy2():
             return (password.password[position1] == password.letter) ^ (password.password[position2] == password.letter)
         else:
             raise ValueError("Something wrong")
-        
 
 class Database():
     def __init__(self, lines):
@@ -30,11 +20,10 @@ class Database():
             self.passwords.append(Password(line))
 
     def countValidatePasswords(self, policy):
-        count = 0
-        for password in self.passwords:
-            if policy.apply(password):
-                count = count + 1
-        return count
+        return sum(map(
+            lambda r: 1 if r else 0, map(
+                lambda password: policy.apply(password), self.passwords)))
+        
 
 class Password():
     def __init__(self, line):
@@ -68,17 +57,6 @@ class Password():
 
     def toStr(self):
         print("min={} max={} letter={} password={}".format(self.min, self.max, self.letter, self.password))
-
-    def isValidate_1(self):
-        count = 0
-        for c in self.password:
-            if c == self.letter:
-                count = count + 1
-        return self.min <= count and self.max >= count
-
-def parseAnInputString(str):
-    #"1-3 a: abcde"
-    return Password(str)
 
 def main():
     with open('input.txt', 'r') as f:
