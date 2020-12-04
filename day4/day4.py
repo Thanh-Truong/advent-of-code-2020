@@ -12,7 +12,12 @@ def isValid(passport):
     required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
     #optional = ['cid']
     # All required field exist
+    #return len(list(filter(lambda k: passport.get(k), required))) == len(required)
+    #and (passport.get('ecl').startswith('#'))
+    
     return len(list(filter(lambda k: passport.get(k), required))) == len(required)
+
+    
 
 def makePassportFromStr(str):
     passport = {}
@@ -32,6 +37,7 @@ def listInformationFromFile():
                 informationLines = []
             else:
                 informationLines.append(line)
+        yield " ".join(informationLines)
 
 if __name__ == "__main__":
     passports = map(lambda info: makePassportFromStr(info), listInformationFromFile())
