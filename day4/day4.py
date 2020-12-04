@@ -1,23 +1,13 @@
 import re
+from functools import reduce
 
 def isValidPartTwo(passport):
-    '''
-    
-    hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
-    ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
-    pid (Passport ID) - a nine-digit number, including leading zeroes.
-    cid (Country ID) - ignored, missing or not.
-
-    '''
-    required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
-    # 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
-    validateFunctions = [isByrValid, isIyrValid, isEyrValid, isHgtValid, isHclValid, isEclValid, isPidValid]
-    # ,  isHgtValid, isHclValid, isEclValid, isPidValid]
-    for i in range(len(required)):
-        if not validateFunctions[i](passport.get(required[i])):
-            return False
-    return True
-
+    rules = {'byr': isByrValid, 'iyr': isIyrValid, 'eyr': isEyrValid,
+             'hgt': isHgtValid, 'hcl': isHclValid, 'ecl': isEclValid, 'pid': isPidValid}
+    # apply rules
+    res = map((lambda field: rules[field](passport.get(field))), rules)
+    return reduce(lambda x, y: x and y, res)
+ 
 def isByrValid(byr):
     # byr (Birth Year) - four digits; at least 1920 and at most 2002.
     try:
@@ -70,8 +60,8 @@ def isPidValid(pid):
 
 def allRequiredFieldsPresent(passport):
     required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
-    #optional = ['cid']
-    return len(list(filter(lambda k: passport.get(k), required))) == len(required)
+    res = map(lambda field: passport.get(field), required)
+    return reduce(lambda x, y: x and y, res)
 
 def makePassportFromStr(str):
     passport = {}
@@ -103,3 +93,7 @@ if __name__ == "__main__":
     print(numValidPassports)
 
     #print(isHgtValid("177cm"))
+    dic = {'a' : 1, 'b' : 2}
+    a = map(lambda k: dic[k], dic.keys())
+    for v in map(lambda k: dic[k], dic.keys()):
+        print(v)
