@@ -9,9 +9,9 @@ def isValidPartTwo(passport):
     cid (Country ID) - ignored, missing or not.
 
     '''
-    required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl']
+    required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
     # 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
-    validateFunctions = [isByrValid, isIyrValid, isEyrValid, isHgtValid, isHclValid]
+    validateFunctions = [isByrValid, isIyrValid, isEyrValid, isHgtValid, isHclValid, isEclValid, isPidValid]
     # ,  isHgtValid, isHclValid, isEclValid, isPidValid]
     for i in range(len(required)):
         if not validateFunctions[i](passport.get(required[i])):
@@ -57,7 +57,8 @@ def isHgtValid(hgt):
 
 def isHclValid(hcl):
     # hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
-    return re.search("^#[0-9a-f]{6}$", hcl)
+    
+    return hcl and re.search("^#[0-9a-f]{6}$", hcl)
 
 def isEclValid(ecl):
     # ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
@@ -65,7 +66,7 @@ def isEclValid(ecl):
 
 def isPidValid(pid):
     # pid (Passport ID) - a nine-digit number, including leading zeroes.
-    re.search("^[0-9]{9}$", pid)
+    return pid and re.search("^[0-9]{9}$", pid)
 
 def allRequiredFieldsPresent(passport):
     required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
