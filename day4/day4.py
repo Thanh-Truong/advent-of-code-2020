@@ -35,11 +35,5 @@ def listInformationFromFile():
 
 if __name__ == "__main__":
     passports = map(lambda info: makePassportFromStr(info), listInformationFromFile())
-    #print(len(list(passports)))
-    #numValidPassports = len(list(filter(lambda p: isValid(p), passports)))
-    #print(numValidPassports)
-    count = 0
-    for p in passports:
-        if isValid(p):
-            count = count + 1
-    print(count)
+    numValidPassports = len(list(filter(lambda p: isValid(p), passports)))
+    print(numValidPassports)
