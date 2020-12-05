@@ -1,34 +1,45 @@
-def convertToRow(sevenLetters):
+'''
+For example, consider just the first seven characters of FBFBBFF RLR:
+
+Start by considering the whole range, rows 0 through 127.
+F means to take the lower half, keeping rows 0 through 63.
+B means to take the upper half, keeping rows 32 through 63.
+F means to take the lower half, keeping rows 32 through 47.
+B means to take the upper half, keeping rows 40 through 47.
+B keeps rows 44 through 47.
+F keeps rows 44 through 45.
+The final F keeps the lower of the two, row 44.
+'''
+def convertToRow(sequences):
     l = 0
     r = 127
-    for letter in sevenLetters:
-        half = round((r - l)/2)
-        if letter == 'F':
-            r = l + half
+    for i in range(1, len(sequences)):
+        half = 2**(7 - i)
+        if sequences[i - 1] == 'F':
+            r = r - half
         else: # or 'B'
             l = l + half
-    row = l
-    return row
-    
-def convertToColumn(threeLetters):
+    return l
+
+'''Start by considering the whole range, columns 0 through 7.
+R means to take the upper half, keeping columns 4 through 7.
+L means to take the lower half, keeping columns 4 through 5.
+The final R keeps the upper of the two, column 5.'''
+def convertToColumn(sequences):
     l = 0
     r = 7
-    for letter in threeLetters:
-        half = round((r - l)/2)
-        print("Begin l = {} and r = {} half = {} letter = {}".format(l, r, half, letter))        
-        if letter == 'L':
-            r = l + half
-        else: # or 'R'
+    for i in range(1, len(sequences)):
+        half = 2**(3 - i)
+        if sequences[i - 1] == 'L':
+            r = r - half
+        else: # or 'B'
             l = l + half
-        print("End l = {} and r = {}".format(l, r))        
-
-    col = r
-    return col
+    return r
 
 def toSeatID(boardingPass):
     row = convertToRow(boardingPass[0:6])
-    column = convertToColumn(boardingPass[7:9])
-    print("row = {} and col = {}".format(row, column))
+    column = convertToColumn(boardingPass[7:10])
+    #print("row = {} and col = {} and id = {}".format(row, column, row * 8 + column))
     return row * 8 + column
 
 def partOne():
@@ -56,4 +67,10 @@ def partTwo():
 
 if __name__ == "__main__":
     print(partOne())
-    #print(partTwo())
+    print(partTwo())
+    #print(toSeatID("FBFBBFFRLR"))
+
+    #print(toSeatID("BFFFBBFRRR"))
+    #print(toSeatID("FFFBBBFRRR"))
+    #print(convertToRow("FBFBBFFRLR"[0:6]))
+    #print(convertToColumn("FBFBBFFRLR"[7:10]))
