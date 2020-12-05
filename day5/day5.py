@@ -13,9 +13,10 @@ The final F keeps the lower of the two, row 44.
 def convertToRow(sequences):
     l = 0
     r = 127
-    for i in range(1, len(sequences)):
-        half = 2**(7 - i)
-        if sequences[i - 1] == 'F':
+    for i in range(len(sequences)):
+        #print("l={} r={} letter = {}".format(l, r, sequences[i]))
+        half = 2**(7 - i - 1)
+        if sequences[i] == 'F':
             r = r - half
         else: # or 'B'
             l = l + half
@@ -28,9 +29,9 @@ The final R keeps the upper of the two, column 5.'''
 def convertToColumn(sequences):
     l = 0
     r = 7
-    for i in range(1, len(sequences)):
-        half = 2**(3 - i)
-        if sequences[i - 1] == 'L':
+    for i in range(len(sequences)):
+        half = 2**(3 - i - 1)
+        if sequences[i] == 'L':
             r = r - half
         else: # or 'B'
             l = l + half
@@ -39,7 +40,7 @@ def convertToColumn(sequences):
 def toSeatID(boardingPass):
     row = convertToRow(boardingPass[0:6])
     column = convertToColumn(boardingPass[7:10])
-    #print("row = {} and col = {} and id = {}".format(row, column, row * 8 + column))
+    #print("row = {} and col = {} ".format(row, column))
     return row * 8 + column
 
 def partOne():
@@ -58,19 +59,23 @@ def partTwo():
         for id in seatIds:
             seats[id] = 'None'
         a = list(seats.keys())
+        lastId = -1
         for i in a:
-            if not (i + 1 in a) and (i +2) in a:
-                print(i + 1)
+            if (lastId != -1 and i - lastId == 2):
+                print(i - 1)
+            lastId = i
         #seatIds.sort()
-        #return seatIds
+        #return a
         
 
 if __name__ == "__main__":
     print(partOne())
-    print(partTwo())
-    #print(toSeatID("FBFBBFFRLR"))
+    #print(partTwo())
+    assert toSeatID("FBFBBFFRLR") == 357
+    assert toSeatID("BFFFBBFRRR") == 567
+    assert toSeatID("FFFBBBFRRR") == 119
+    assert toSeatID("BBFFBBFRLL") == 820
+    
+    
 
-    #print(toSeatID("BFFFBBFRRR"))
-    #print(toSeatID("FFFBBBFRRR"))
-    #print(convertToRow("FBFBBFFRLR"[0:6]))
-    #print(convertToColumn("FBFBBFFRLR"[7:10]))
+    
