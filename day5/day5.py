@@ -43,38 +43,36 @@ def toSeatID(boardingPass):
     #print("row = {} and col = {} ".format(row, column))
     return row * 8 + column
 
-def partOne():
-    # What is the highest seat ID on a boarding pass?
+def toSeatIDs():
     with open('input.txt', 'r') as f:
         boardingPasses = f.read().splitlines()
-        return max(map(toSeatID, boardingPasses))
+        return map(toSeatID, boardingPasses)
 
-def partTwo():
+def partOne(seatIds):
+    # What is the highest seat ID on a boarding pass?
+    return max(seatIds)
+
+def partTwo(seatIds):
     # What is the ID of your seat?
-    with open('input.txt', 'r') as f:
-        boardingPasses = f.read().splitlines()
-        seatIds = list(map(toSeatID, boardingPasses))
-        seatIds.sort()
-        seats = {}
-        for id in seatIds:
-            seats[id] = 'None'
-        a = list(seats.keys())
-        lastId = -1
-        for i in a:
-            if (lastId != -1 and i - lastId == 2):
-                print(i - 1)
-            lastId = i
-        #seatIds.sort()
-        #return a
+    seatIds = list(seatIds)
+    seatIds.sort()
+    lastId = -1
+    for i in seatIds:
+        if (lastId != -1 and i - lastId ==2):
+            return i - 1
+        lastId = i
         
 
 if __name__ == "__main__":
-    print(partOne())
-    #print(partTwo())
+    # Test
     assert toSeatID("FBFBBFFRLR") == 357
     assert toSeatID("BFFFBBFRRR") == 567
     assert toSeatID("FFFBBBFRRR") == 119
     assert toSeatID("BBFFBBFRLL") == 820
+
+    seatIds = toSeatIDs()
+    print(partOne(seatIds))
+    print(partTwo(toSeatIDs()))
     
     
 
