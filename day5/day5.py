@@ -11,36 +11,28 @@ F keeps rows 44 through 45.
 The final F keeps the lower of the two, row 44.
 '''
 def convertToRow(sequences):
-    l = 0
-    r = 127
+    row = 0
     for i in range(len(sequences)):
-        #print("l={} r={} letter = {}".format(l, r, sequences[i]))
-        half = 2**(7 - i - 1)
-        if sequences[i] == 'F':
-            r = r - half
-        else: # or 'B'
-            l = l + half
-    return l
+        half = 2**(6 - i)
+        if sequences[i] == 'B':
+            row = row + half
+    return row
 
 '''Start by considering the whole range, columns 0 through 7.
 R means to take the upper half, keeping columns 4 through 7.
 L means to take the lower half, keeping columns 4 through 5.
 The final R keeps the upper of the two, column 5.'''
 def convertToColumn(sequences):
-    l = 0
-    r = 7
+    col = 0
     for i in range(len(sequences)):
-        half = 2**(3 - i - 1)
-        if sequences[i] == 'L':
-            r = r - half
-        else: # or 'B'
-            l = l + half
-    return r
+        half = 2**(2 - i)
+        if sequences[i] == 'R':
+            col = col + half
+    return col
 
 def toSeatID(boardingPass):
-    row = convertToRow(boardingPass[0:6])
+    row = convertToRow(boardingPass[0:7])
     column = convertToColumn(boardingPass[7:10])
-    #print("row = {} and col = {} ".format(row, column))
     return row * 8 + column
 
 def toSeatIDs():
@@ -54,14 +46,41 @@ def partOne(seatIds):
 
 def partTwo(seatIds):
     # What is the ID of your seat?
-    seatIds = list(seatIds)
     seatIds.sort()
     lastId = -1
     for i in seatIds:
-        if (lastId != -1 and i - lastId ==2):
-            return i - 1
+        if (lastId != -1) and (i - lastId == 2):
+            return(i - 1)
         lastId = i
+
+def quicker():
+    with open('input.txt', 'r') as f:
+        boardingPasses = f.read().splitlines()
         
+        maxId = - 1
+        ids= []
+        for bp in boardingPasses:
+            row = 0
+            col = 0
+            for i in range(7):                
+                if bp[i] == 'B':
+                    row = row + 2**(6 - i)
+            
+            for i in range(7, 10):                
+                if bp[i] == 'R':
+                    col = col + 2**(9 - i)
+            id = row*8 + col
+            ids.append(id)
+            if maxId < id:
+                maxId = id
+        print(maxId)
+        lastId = -1
+        ids.sort()
+    
+        for i in ids:
+            if (lastId != -1) and i - lastId == 2:
+                print(i - 1)
+            lastId = i
 
 if __name__ == "__main__":
     # Test
@@ -72,7 +91,8 @@ if __name__ == "__main__":
 
     seatIds = toSeatIDs()
     print(partOne(seatIds))
-    print(partTwo(toSeatIDs()))
+    print(partTwo(list(toSeatIDs())))
+    quicker()
     
     
 
