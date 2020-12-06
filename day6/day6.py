@@ -11,24 +11,23 @@ def groups():
         if len(group) > 0:
             yield group
 
-def countQuestionsAnyOneAnswerYes(group):
-    d = {}
+def countQuestionsAnyOneAnswerYes_2(group):
+    answers = [0] * 26
     for person in group:
         for c in person:
-            d[c] = 'None'
-    return  sum([1 for i in d.keys()])
+            answers[ord(c) - ord('a')] = 1 # there was an answer
+    return  sum(answers)
 
-def countQuestionsEveryOneAnswerYes(group):
-    firstPerson = group[0]
-    count = 0
-    for question in firstPerson:
-        # question was answered by all others ?
-        s = sum(map(lambda other: 1 if question in other else 0, group[1:]))
-        if s == len(group) - 1: # every other
-            count = count +  1
-    return  count
+def countQuestionsEveryOneAnswerYes_2(group):
+    answers = [0] * 26
+    size = len(group)
+    for person in group:
+        for c in person:
+            pos = ord(c) - ord('a')
+            answers[pos] = answers[pos] +  1 # this person answered
+    return  sum([1 for i in answers if i == size])
 
 if __name__ == "__main__":
-    print(sum(map(lambda group: countQuestionsAnyOneAnswerYes(group), groups())))
-    print(sum(map(lambda group: countQuestionsEveryOneAnswerYes(group), groups())))
-        
+    print(sum(map(lambda group: countQuestionsAnyOneAnswerYes_2(group), groups())))
+    print(sum(map(lambda group: countQuestionsEveryOneAnswerYes_2(group), groups())))
+    
