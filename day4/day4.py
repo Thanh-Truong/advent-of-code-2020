@@ -45,23 +45,23 @@ def makePassportFromStr(str):
         passport[k] = v
     return passport
 
-def listInformationFromFile():
+def listGroups():
     with open('input.txt', 'r') as f:
         lines = f.read().splitlines()
-        informationLines = []
+        group = []
         for line in lines:
             if line == "":
-                yield " ".join(informationLines)
-                informationLines = []
+                yield " ".join(group)
+                group.clear()
             else:
-                informationLines.append(line)
-        yield " ".join(informationLines)
+                group.append(line)
+        yield " ".join(group) # last group
 
 if __name__ == "__main__":
-    passports = map(lambda info: makePassportFromStr(info), listInformationFromFile())
+    passports = map(lambda info: makePassportFromStr(info), listGroups())
     numValidPassports = len(list(filter(lambda p: allRequiredFieldsPresent(p), passports)))
     print(numValidPassports)
 
-    passports = map(lambda info: makePassportFromStr(info), listInformationFromFile())
+    passports = map(lambda info: makePassportFromStr(info), listGroups())
     numValidPassports = len(list(filter(lambda p: isValidPartTwo(p), passports)))
     print(numValidPassports)
