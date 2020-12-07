@@ -29,7 +29,6 @@ def countContainedBags(outerBag, bags):
             bagInfo[1], bags), innerBags))
 
 if __name__ == "__main__":
-    #rule = "light red bags contain 3 wavy teal bags, 3 plaid aqua bags, 4 drab lavender bags, 2 bright coral bags."
     bags = buildBags()
     count = 0
     for outerBag in bags.keys():

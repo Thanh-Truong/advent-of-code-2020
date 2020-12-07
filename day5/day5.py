@@ -1,7 +1,7 @@
-def binaryJump(sequences, letterToJump):
+def binaryJump(sequences, letterToJumpRight):
     pos = 0
     for i in range(len(sequences)):
-        if sequences[i] == letterToJump:
+        if sequences[i] == letterToJumpRight:
             half = 2**(len(sequences) - 1 - i)
             pos = pos + half
     return pos
