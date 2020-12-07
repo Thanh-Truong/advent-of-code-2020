@@ -1,8 +1,8 @@
 def binaryJump(sequences, letterToJump):
     pos = 0
     for i in range(len(sequences)):
-        half = 2**(len(sequences) - 1 - i)
         if sequences[i] == letterToJump:
+            half = 2**(len(sequences) - 1 - i)
             pos = pos + half
     return pos
 
@@ -21,13 +21,11 @@ def partOne(seatIds):
     return max(seatIds)
 
 def partTwo(seatIds):
-    # What is the ID of your seat?
+    # What is the ID of your seat? The missing one
     seatIds.sort()
-    lastId = -1
-    for i in seatIds:
-        if (lastId != -1) and (i - lastId == 2):
-            return(i - 1)
-        lastId = i
+    for i in range(len(seatIds) - 1):
+        if seatIds[i] + 2 == seatIds[i+1]:
+            return seatIds[i] + 1
 
 if __name__ == "__main__":
     # Test
