@@ -29,8 +29,8 @@ def isHgtValid(hgt):
     #   If in, the number must be at least 59 and at most 76.
     unit = hgt[len(hgt) -2 : len(hgt)]
     num = int(hgt[:len(hgt) - 2])
-    return (unit == "cm" and 150 <= int(num) <= 193) or (
-        unit == "in" and 59 <= int(num) <= 76)
+    return (unit == "cm" and 150 <= num <= 193) or (
+        unit == "in" and 59 <= num <= 76)
 
 def allRequiredFieldsPresent(passport):
     fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
