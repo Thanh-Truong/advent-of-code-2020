@@ -1,33 +1,33 @@
 import pprint
-def toColors(rule):
-    tokens = rule.replace('.', '').replace('bags', '').replace(
-        'bag', '').replace('no other', '').replace('contain', ',').split(',')
-    colorsAndSpace = list(map(lambda item: ''.join(filter(lambda c: not c.isdigit(), item)), tokens))
-    colors = list(map(lambda x: x.strip(), colorsAndSpace))
-    return colors
+def buildBags():
+    bags = {}
+    with open('input.txt', 'r') as f:
+        for line in f.read().splitlines():
+            cleanedLine = line.replace('.', '').replace('bags', '').replace('bag','').replace('contain',',')
+            parts = cleanedLine.split(',')
+            outerBag = parts[0].strip()
+            otherBags = parts[1:]
+            bags[outerBag] = []
+            for i in otherBags:
+               elements = i.strip().split(" ")
+               if elements[0] != "no":
+                   quantity = elements[0]
+                   bag = " ".join(elements[1:])
+                   bags[outerBag].append((quantity, bag))
+    return bags
 
-def findShinyGold(v, directions):
-    if 'shiny gold' in v:
+def containGold(outerBag, bags):
+    innerBags = bags[outerBag]
+    directlyFound = any(filter(lambda info: info[1] == 'shiny gold', innerBags))
+    if directlyFound:
         return True
     else:
-        # some in v may led to shiny gold
-        for some in v:
-            vv = directions.get(some)
-            if vv and 'shiny gold' in vv:
-                return True
-
+        return any(map(lambda bag: containGold(bag[1], bags), innerBags))
 if __name__ == "__main__":
-    #rule = "faded blue bags contain no other bags"
-    #print(toColors(rule))
-    directions = {}
-    with open('input.txt', 'r') as f:
-        for rule in f.read().splitlines():
-            colors = toColors(rule)
-            directions[colors[0]] = colors[1:]
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(directions)
+    #rule = "light red bags contain 3 wavy teal bags, 3 plaid aqua bags, 4 drab lavender bags, 2 bright coral bags."
+    bags = buildBags()
     count = 0
-    for k , v in directions.items():
-        if findShinyGold(v, directions):
+    for outerBag in bags.keys():
+        if containGold(outerBag, bags):
             count = count + 1
-    print(count)
+    pprint.pprint(count)
