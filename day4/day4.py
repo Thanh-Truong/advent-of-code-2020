@@ -33,9 +33,9 @@ def isHgtValid(hgt):
         unit == "in" and 59 <= int(num) <= 76)
 
 def allRequiredFieldsPresent(passport):
-    required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
-    res = map(lambda field: passport.get(field), required)
-    return reduce(lambda x, y: x and y, res)
+    fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
+    # all fields are present.
+    return len(list(filter(lambda field: passport.get(field), fields))) == len(fields)
 
 def makePassportFromStr(str):
     passport = {}
