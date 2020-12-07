@@ -4,12 +4,10 @@ def makeArray():
 
 def countTreesWithSlope(array, right, step):
     count = 0
-    row = 0
+    row = step # start counting from the 'step' row
     while row < len(array):
-        if row != 0:  # start position
-            checkPoint = row * right % len(array[row])
-            if array[row][checkPoint] == '#':
-                count = count + 1
+        if array[row][row * right % len(array[row])] == '#':
+            count = count + 1
         row = row + step
     return count
 
