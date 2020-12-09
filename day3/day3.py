@@ -7,8 +7,8 @@ def countTreesWithSlope(array, right, step):
     row = step # start counting from the 'step' row
     while row < len(array):
         if array[row][row * right % len(array[row])] == '#':
-            count = count + 1
-        row = row + step
+            count += 1
+        row += step
     return count
 
 

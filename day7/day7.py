@@ -34,7 +34,7 @@ if __name__ == "__main__":
     for outerBag in bags.keys():
         # PartOne
         if containGold(outerBag, bags):
-            count = count + 1
+            count += 1
     # PartTwo
     aa = countContainedBags('shiny gold', bags)
     

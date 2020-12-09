@@ -10,11 +10,11 @@ def execute(instructions):
         [op, arg] = instructions[current].split(" ")
         step = 1
         if op == 'acc':
-            value = value + int(arg)
+            value += int(arg)
         elif op == 'jmp':
             step = int(arg)
         # next
-        current = current +  step
+        current += step
     return value, current
 
 def partTwo(instructions):
