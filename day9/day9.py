@@ -4,12 +4,15 @@ def validNumber(a, listNumbers):
         if a/2 != b and (a - b) in listNumbers:
             return True
 
+def firstInvalidNumber(preambleSize):
+    for i in range(preambleSize, len(numbers),1):
+        if not validNumber(numbers[i], numbers[i-preambleSize:i]):
+            return numbers[i]
+
 if __name__ == "__main__":
-    preambleSize = 25
+    
     with open('input.txt', 'r') as f:
         numbers = [int(i) for i in f.read().splitlines()]
-
-        for i in range(preambleSize, len(numbers),1):
-            if not validNumber(numbers[i], numbers[i-preambleSize:i]):
-                print(numbers[i])
-                break
+        firstInvalidNumber = firstInvalidNumber(preambleSize=5)
+        print(firstInvalidNumber)
+        
