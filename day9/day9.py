@@ -1,17 +1,21 @@
-def validNumber(a, listNumbers):
-    # two different numbers in list sum up to 'a'
-    for b in listNumbers:
-        if a/2 != b and (a - b) in listNumbers:
+
+def validNumber(a, ls):
+    """a is valid if there are two different numbers in list sum up to a
+    """
+    for b in ls:
+        if a/2 != b and (a - b) in ls:
             return True
 
-def firstInvalidNumber(preambleSize):
-    for i in range(preambleSize, len(numbers),1):
-        if not validNumber(numbers[i], numbers[i-preambleSize:i]):
-            return numbers[i]
+def firstInvalidNumber(preambleSize, ls):
+    """ Find the first invalid number
+    """
+    for i in range(preambleSize, len(ls),1):
+        if not validNumber(ls[i], ls[i-preambleSize:i]):
+            return ls[i]
 
-def twoContiguousNumbers(numbers):
-    for i in range(len(numbers) - 1):
-        if numbers[i] < numbers[i + 1]:
+def twoContiguousNumbers(ls):
+    for i in range(len(ls) - 1):
+        if ls[i] < ls[i + 1]:
             return True
 
 def findContiguousSetWithSumEquals(value,numbers):
@@ -19,7 +23,7 @@ def findContiguousSetWithSumEquals(value,numbers):
     start = 0
     stop = 0
     for _ in range(len(numbers)):
-        print("{} current {} start {} stop {}".format(numbers[start:stop], numbers[_], start, stop))
+        #print("{} current {} start {} stop {}".format(numbers[start:stop], numbers[_], start, stop))
         # expand first
         stop +=1
         while sum(numbers[start:stop]) > firstInvalidNumber:
@@ -33,7 +37,7 @@ if __name__ == "__main__":
     
     with open('input.txt', 'r') as f:
         numbers = [int(i) for i in f.read().splitlines()]
-        firstInvalidNumber = firstInvalidNumber(preambleSize=25)
+        firstInvalidNumber = firstInvalidNumber(25, numbers)
         print(firstInvalidNumber)
         subSet = findContiguousSetWithSumEquals(firstInvalidNumber, numbers)
         print(min(subSet) + max(subSet))
