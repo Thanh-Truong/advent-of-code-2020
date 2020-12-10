@@ -1,5 +1,3 @@
-import copy
-
 def execute(instructions):
     visited = [0] * len(instructions)
     value = 0
@@ -30,9 +28,6 @@ def partTwo(instructions):
             if current == len(instructions):
                 break
     print("Part Two : {}".format(value))
-
-    
-
 
 def main():
     with open('input.txt', 'r') as f:
